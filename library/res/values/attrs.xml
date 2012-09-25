@@ -19,6 +19,8 @@
         <attr name="ptrReleaseBottomDrawable" format="reference" />
         <attr name="ptrPullBottomDrawable" format="reference" />
         <attr name="ptrOverScroll" format="reference|boolean" />
+        <attr name="ptrHeaderTextAppearance" format="reference" />
+        <attr name="ptrSubHeaderTextAppearance" format="reference" />
     </declare-styleable>
 
 </resources>
