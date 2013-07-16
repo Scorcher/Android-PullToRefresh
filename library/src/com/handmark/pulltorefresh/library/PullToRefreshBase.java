@@ -1174,6 +1174,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
      *         change
      */
     private void pullEvent() {
+        final int userScrollValue;
         final int newScrollValue;
         final int itemDimension;
         final float initialMotionValue, lastMotionValue;
@@ -1192,17 +1193,20 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
         switch (mCurrentMode) {
             case PULL_FROM_END:
-                newScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / FRICTION);
+                userScrollValue = Math.round(Math.max(initialMotionValue - lastMotionValue, 0) / FRICTION);
                 itemDimension = getFooterSize();
                 break;
             case PULL_FROM_START:
             default:
-                newScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / FRICTION);
+                userScrollValue = Math.round(Math.min(initialMotionValue - lastMotionValue, 0) / FRICTION);
                 itemDimension = getHeaderSize();
                 break;
         }
 
-        setHeaderScroll(getTopScrollValue() + newScrollValue);
+        newScrollValue = isRefreshing()
+                ? (getTopScrollValue() + userScrollValue)
+                : userScrollValue;
+        setHeaderScroll(newScrollValue);
 
         if (newScrollValue != 0 && !isRefreshing()) {
             float scale = Math.abs(newScrollValue) / (float) itemDimension;
