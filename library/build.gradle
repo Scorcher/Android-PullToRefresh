@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
+
+    defaultConfig {
+        minSdkVersion 4
+        targetSdkVersion 23
+        versionCode = currentVersionMajor.toInteger() * 1000 + currentVersionMinor.toInteger() * 100 + currentVersionBuild.toInteger() * 10
+        versionName = "${currentVersionMajor}.${currentVersionMinor}.${currentVersionBuild}"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+        }
+    }
+}
+
+apply plugin: "com.jfrog.artifactory-upload"
